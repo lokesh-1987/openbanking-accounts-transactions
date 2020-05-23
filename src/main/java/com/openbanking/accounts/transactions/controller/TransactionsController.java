@@ -44,4 +44,19 @@ public class TransactionsController {
         return new TransactionsResponse().setTransactions(transactions);
     }
 
+    @GetMapping(value = "banks/{bankId}/accounts/{accountId}/{viewId}/transactions/totalAmount", params = "transactionType")
+    public double getTotalAmountBasedOnTransactionType(@PathVariable("bankId") String bankId,
+                                                       @PathVariable("accountId") String accountId,
+                                                       @PathVariable("viewId") String viewId,
+                                                       @RequestParam("transactionType") String transactionType)
+            throws OpenBankSandboxServiceException, IncorrectSandBoxInputDetailException {
+        log.info("Received getTotalAmountBasedOnTransactionType request with bank id {}, accountId {}, viewId {} and transactionType", bankId, accountId, viewId, transactionType);
+        return new TransactionTransformer()
+                .apply(transactionsService.getTransactions(bankId, accountId, viewId)).getTransactions()
+                .stream()
+                .filter(transaction -> transaction != null && transactionType.equals(transaction.getTransactionType()))
+                .map(transaction -> transaction.getTransactionAmount())
+                .collect(Collectors.summingDouble(Double::doubleValue));
+    }
+
 }

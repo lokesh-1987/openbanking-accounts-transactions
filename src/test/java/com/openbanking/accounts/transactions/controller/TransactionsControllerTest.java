@@ -52,6 +52,17 @@ public class TransactionsControllerTest {
         assertThat(response.getStatusCodeValue(), is(200));
     }
 
+    @Test
+    public void testGetTotalAmountBasedOnTransactionType() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        final ResponseEntity<Double> response = restTemplate.exchange(
+                createURLWithPort("/obp/v1.2.1/banks/rbs/accounts/savings-kids-john/public/transactions/totalAmount?transactionType=sandbox-payment"),
+                HttpMethod.GET, new HttpEntity<String>(headers), Double.class);
+        assertNotNull(response);
+        assertNotNull(response.getBody());
+        assertThat(response.getStatusCodeValue(), is(200));
+    }
+
     private String createURLWithPort(final String uri) {
         return "http://localhost:" + port + uri;
     }
