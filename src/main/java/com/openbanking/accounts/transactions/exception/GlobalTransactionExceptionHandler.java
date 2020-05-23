@@ -20,4 +20,9 @@ public class GlobalTransactionExceptionHandler {
     @ExceptionHandler(IncorrectSandBoxInputDetailException.class)
     public void handleIncorrectSandBoxInputDetailException (HttpServletRequest request, HttpServletResponse response, Exception ex) throws Exception {
     }
+
+    @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR, reason="Jwt validation exception")
+    @ExceptionHandler(JwtValidationException.class)
+    public void handleJwtValidationException (HttpServletRequest request, HttpServletResponse response, Exception ex) throws Exception {
+    }
 }
