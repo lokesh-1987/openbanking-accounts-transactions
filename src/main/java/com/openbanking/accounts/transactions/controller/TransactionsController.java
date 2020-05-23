@@ -1,5 +1,6 @@
 package com.openbanking.accounts.transactions.controller;
 
+import com.openbanking.accounts.transactions.domain.Transactions;
 import com.openbanking.accounts.transactions.exception.IncorrectSandBoxInputDetailException;
 import com.openbanking.accounts.transactions.exception.OpenBankSandboxServiceException;
 import com.openbanking.accounts.transactions.response.TransactionsResponse;
@@ -7,10 +8,10 @@ import com.openbanking.accounts.transactions.service.TransactionsServiceImpl;
 import com.openbanking.accounts.transactions.transformer.TransactionTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/obp/v1.2.1/")
@@ -27,4 +28,20 @@ public class TransactionsController {
         log.info("Received getAccountsTransactions request with bank id {}, accountId {} and viewId {}", bankId, accountId, viewId);
         return new TransactionTransformer().apply(transactionsService.getTransactions(bankId, accountId, viewId));
     }
+
+    @GetMapping(value = "banks/{bankId}/accounts/{accountId}/{viewId}/transactions", params = "transactionType")
+    public TransactionsResponse getAccountsTransactionsBasedOnType(@PathVariable("bankId") String bankId,
+                                                                   @PathVariable("accountId") String accountId,
+                                                                   @PathVariable("viewId") String viewId,
+                                                                   @RequestParam("transactionType") String transactionType)
+            throws OpenBankSandboxServiceException,IncorrectSandBoxInputDetailException {
+        log.info("Received getAccountsTransactionsBasedOnType request with bank id {}, accountId {}, viewId {} and transactionType", bankId, accountId, viewId, transactionType);
+        final List<Transactions> transactions = new TransactionTransformer()
+                .apply(transactionsService.getTransactions(bankId, accountId, viewId)).getTransactions()
+                .stream()
+                .filter(transaction -> transaction != null && transactionType.equals(transaction.getTransactionType()))
+                .collect(Collectors.toList());
+        return new TransactionsResponse().setTransactions(transactions);
+    }
+
 }
