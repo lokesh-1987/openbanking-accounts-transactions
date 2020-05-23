@@ -58,7 +58,7 @@ transforms the data as per the required mapping.
 - **Note** In order to enable swagger UI and documentation, make sure application is running on default port : 8080.
 - Swagger UI is enabled on the below URL,
     - **http://localhost:8080/swagger-ui.html**
-  and swagger documentation can be found on the below link,
+- Swagger documentation can be found on the below link,
     - **http://localhost:8080/v2/api-docs**
 
 # Execution
