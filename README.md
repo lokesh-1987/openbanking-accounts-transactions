@@ -16,7 +16,7 @@ transforms the data as per the required mapping.
     - a) To get the list of transactions
        - **http://localhost:8080/obp/v1.2.1/banks/{bankId}/accounts/{accountId}/{viewId}/transactions**
     - b) To get the list of transactions based on transaction type
-       - **http://localhost:8080/obp/v1.2.1/banks/{bankId}/accounts/{accountId}/{viewId}/transactions?transactionType=sandbox-payment**
+       - **http://localhost:8080/obp/v1.2.1/banks/{bankId}/accounts/{accountId}/{viewId}/transactions/filter?transactionType=sandbox-payment**
     - c) To get total transaction amount based on transaction type
        - **http://localhost:8080/obp/v1.2.1/banks/{bankId}/accounts/{accountId}/{viewId}/transactions/totalAmount?transactionType=sandbox-payment**
 - **Note** {banId}, {accountId} and {viewId} should be replaced with actual value in URl.
@@ -31,30 +31,35 @@ transforms the data as per the required mapping.
     b) Oath 2.0 Jwt authentication security
 - SSL level security can be enabled or disabled by marking the following property as true or false in the
   application.properties file as shown below,
-  SSL security Enabled :  **server.ssl.enabled=true**
-  SSL security Disabled :  **server.ssl.enabled=false**
+    - SSL security Enabled :  **server.ssl.enabled=true**
+    - SSL security Disabled :  **server.ssl.enabled=false**
 - For Oath 2.0 Jwt security, the following end point is created in token controller class,
-   **http://localhost:8080/token**
+   - **http://localhost:8080/token**
 - This end point is basically a POST call, and accepts the following JSON as body,
-   for example,
-    **{
-        "userName": "Lokesh",
-        "userId": 1234,
-        "role": "admin"
-    }**
+   - Example,
+        **{
+            "userName": "Lokesh",
+            "userId": 1234,
+            "role": "admin"
+        }**
 
    and it returns the JWT token as below,
    **eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMb2tlc2giLCJ1c2VySWQiOiIxMjM0Iiwicm9sZSI6ImFkbWluIn0.
    g17gIYpcvJzKHDATOvEEuPAT7oeO7XWRp-NsMxH0tk87R9aHAqKpVyuGyqpteTQDC2vpbsEsnWMDaeKq2q2How**
 
 - This jwt token is added into the header as below for all three GET transactions calls,
-    header key : **Authorisation**
-    header value : **Token eyJhbGciOiJIUzUxMiJ9.
-    eyJzdWIiOiJMb2tlc2giLCJ1c2VySWQiOiIxMjM0Iiwicm9sZSI6ImFkbWluIn0.
-    g17gIYpcvJzKHDATOvEEuPAT7oeO7XWRp-NsMxH0tk87R9aHAqKpVyuGyqpteTQDC2vpbsEsnWMDaeKq2q2How**
+    - header key : **Authorisation**
+    - header value : **Token eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMb2tlc2giLCJ1c2VySWQiOiIxMjM0Iiwicm9sZSI6ImFkbWluIn0
+    .g17gIYpcvJzKHDATOvEEuPAT7oeO7XWRp-NsMxH0tk87R9aHAqKpVyuGyqpteTQDC2vpbsEsnWMDaeKq2q2How**
 
 - Exception handling is also implemented in case of any failure in the application and also
   logging is covered as in when it is required using **Sl4j libraries**.
+
+- **Note** In order to enable swagger UI and documentation, make sure application is running on default port : 8080.
+- Swagger UI is enabled on the below URL,
+    - **http://localhost:8080/swagger-ui.html**
+  and swagger documentation can be found on the below link,
+    - **http://localhost:8080/v2/api-docs**
 
 # Execution
 
