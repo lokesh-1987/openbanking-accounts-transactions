@@ -49,7 +49,7 @@ public class TransactionsControllerTest {
         final String jwtToken = this.getJwtToken();
         headers.add("Authorisation", "Token "+jwtToken);
         final ResponseEntity<TransactionsResponse> response = restTemplate.exchange(
-                createURLWithPort("/obp/v1.2.1/banks/rbs/accounts/savings-kids-john/public/transactions?transactionType=sandbox-payment"),
+                createURLWithPort("/obp/v1.2.1/banks/rbs/accounts/savings-kids-john/public/transactions/filter?transactionType=sandbox-payment"),
                 HttpMethod.GET, new HttpEntity<String>(headers), TransactionsResponse.class);
         assertNotNull(response);
         assertNotNull(response.getBody());

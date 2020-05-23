@@ -29,7 +29,7 @@ public class TransactionsController {
         return new TransactionTransformer().apply(transactionsService.getTransactions(bankId, accountId, viewId));
     }
 
-    @GetMapping(value = "banks/{bankId}/accounts/{accountId}/{viewId}/transactions", params = "transactionType")
+    @GetMapping(value = "banks/{bankId}/accounts/{accountId}/{viewId}/transactions/filter", params = "transactionType")
     public TransactionsResponse getAccountsTransactionsBasedOnType(@PathVariable("bankId") String bankId,
                                                                    @PathVariable("accountId") String accountId,
                                                                    @PathVariable("viewId") String viewId,
