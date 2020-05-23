@@ -33,6 +33,8 @@ public class TransactionsControllerTest {
     @Test
     public void testGetAccountsTransactions() throws Exception {
         HttpHeaders headers = new HttpHeaders();
+        final String jwtToken = this.getJwtToken();
+        headers.add("Authorisation", "Token "+jwtToken);
         final ResponseEntity<TransactionsResponse> response = restTemplate.exchange(
                 createURLWithPort("/obp/v1.2.1/banks/rbs/accounts/savings-kids-john/public/transactions"),
                 HttpMethod.GET, new HttpEntity<String>(headers), TransactionsResponse.class);
@@ -44,6 +46,8 @@ public class TransactionsControllerTest {
     @Test
     public void testGetAccountsTransactionsBasedOnType() throws Exception {
         HttpHeaders headers = new HttpHeaders();
+        final String jwtToken = this.getJwtToken();
+        headers.add("Authorisation", "Token "+jwtToken);
         final ResponseEntity<TransactionsResponse> response = restTemplate.exchange(
                 createURLWithPort("/obp/v1.2.1/banks/rbs/accounts/savings-kids-john/public/transactions?transactionType=sandbox-payment"),
                 HttpMethod.GET, new HttpEntity<String>(headers), TransactionsResponse.class);
@@ -55,12 +59,26 @@ public class TransactionsControllerTest {
     @Test
     public void testGetTotalAmountBasedOnTransactionType() throws Exception {
         HttpHeaders headers = new HttpHeaders();
+        final String jwtToken = this.getJwtToken();
+        headers.add("Authorisation", "Token "+jwtToken);
         final ResponseEntity<Double> response = restTemplate.exchange(
                 createURLWithPort("/obp/v1.2.1/banks/rbs/accounts/savings-kids-john/public/transactions/totalAmount?transactionType=sandbox-payment"),
                 HttpMethod.GET, new HttpEntity<String>(headers), Double.class);
         assertNotNull(response);
         assertNotNull(response.getBody());
         assertThat(response.getStatusCodeValue(), is(200));
+    }
+
+    private String getJwtToken() {
+        final Map userMap = new HashMap<>();
+        userMap.put("userName", "Lokesh");
+        userMap.put("userId", "1234");
+        userMap.put("role", "admin");
+        HttpHeaders headers = new HttpHeaders();
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/token"),
+                HttpMethod.POST, new HttpEntity<Object>(userMap, headers), String.class);
+        return response.getBody();
     }
 
     private String createURLWithPort(final String uri) {
