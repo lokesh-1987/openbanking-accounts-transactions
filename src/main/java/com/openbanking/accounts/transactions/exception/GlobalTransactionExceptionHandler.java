@@ -21,6 +21,11 @@ public class GlobalTransactionExceptionHandler {
     public void handleIncorrectSandBoxInputDetailException (HttpServletRequest request, HttpServletResponse response, Exception ex) throws Exception {
     }
 
+    @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR, reason="Jwt token is Missing")
+    @ExceptionHandler(JwtMissingException.class)
+    public void handleJwtMissingException (HttpServletRequest request, HttpServletResponse response, Exception ex) throws Exception {
+    }
+
     @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR, reason="Jwt validation exception")
     @ExceptionHandler(JwtValidationException.class)
     public void handleJwtValidationException (HttpServletRequest request, HttpServletResponse response, Exception ex) throws Exception {

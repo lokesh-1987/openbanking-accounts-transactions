@@ -70,6 +70,16 @@ public class TransactionsControllerTest {
     }
 
     @Test
+    public void testGetAccountsTransactionsWithoutAuthenticationShouldThrow_500() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        final String jwtToken = this.getJwtToken();
+        final ResponseEntity<TransactionsResponse> response = restTemplate.exchange(
+                createURLWithPort("/obp/v1.2.1/banks/rbs/accounts/savings-kids-john/public/transactions"),
+                HttpMethod.GET, new HttpEntity<String>(headers), TransactionsResponse.class);
+        assertThat(response.getStatusCodeValue(), is(500));
+    }
+
+    @Test
     public void testGetAccountsTransactionsWithIncorrectTokenShouldThrow_500() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorisation", "Token ekjefbjkfbjkfbjkdfb");
