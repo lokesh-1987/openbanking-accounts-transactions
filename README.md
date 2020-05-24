@@ -72,7 +72,8 @@ In order to run the application, follow the below steps,
 - Now the application is up and running on the default port : 8080.
 - Open another terminal in the same directory.
 - Use the below curl command to get the token,
-    -**curl -X POST "http://localhost:8080/token" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"userName\": \"Lokesh\", \"userId\": 1234, \"role\": \"admin\"}"**
+    - **Example:**
+        - **curl -X POST "http://localhost:8080/token" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"userName\": \"Lokesh\", \"userId\": 1234, \"role\": \"admin\"}"**
 - Use the below curl command to get the list of transactions using token received on the above POST token call,
     - **Example:**
         - **curl -X GET "http://localhost:8080/obp/v1.2.1/banks/rbs/accounts/savings-kids-john/public/transactions" -H "Authorisation: Token eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMb2tlc2giLCJ1c2VySWQiOiIxMjM0Iiwicm9sZSI6ImFkbWluIn0.g17gIYpcvJzKHDATOvEEuPAT7oeO7XWRp-NsMxH0tk87R9aHAqKpVyuGyqpteTQDC2vpbsEsnWMDaeKq2q2How"**
