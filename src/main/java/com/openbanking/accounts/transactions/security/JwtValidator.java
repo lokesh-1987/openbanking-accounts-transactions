@@ -5,20 +5,22 @@ import com.openbanking.accounts.transactions.exception.JwtValidationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
 public class JwtValidator {
 
-    private String secret = "transactionKey";
+    @Value("${open.banking.accounts.transaction.signed.key}")
+    private String secretKey;
 
     public JwtUser validate(String token) {
 
         JwtUser jwtUser = null;
         try {
             Claims body = Jwts.parser()
-                    .setSigningKey(secret)
+                    .setSigningKey(secretKey)
                     .parseClaimsJws(token)
                     .getBody();
 

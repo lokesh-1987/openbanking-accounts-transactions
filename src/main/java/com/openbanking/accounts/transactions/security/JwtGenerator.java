@@ -5,11 +5,15 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
 public class JwtGenerator {
+
+    @Value("${open.banking.accounts.transaction.signed.key}")
+    private String secretKey;
 
     public String generate(JwtUser jwtUser) {
 
@@ -21,7 +25,7 @@ public class JwtGenerator {
         log.info("Generating Jwt Token");
         final String jwtToken = Jwts.builder()
                 .setClaims(claims)
-                .signWith(SignatureAlgorithm.HS512, "transactionKey")
+                .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
         log.info("jwt generated :::: "+jwtToken);
         return jwtToken;
