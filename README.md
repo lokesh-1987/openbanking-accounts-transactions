@@ -70,9 +70,15 @@ In order to run the application, follow the below steps,
 - Run the following command:
     - **mvn spring-boot:run**
 - Now the application is up and running on the default port : 8080.
-- Make sure Postman is downloaded in your local machine as it has been used to test the transactions API.
-- Use POSTMAN to get the jwt token using POST token call and then this token is added into the header
-  for all the 3 GET transactions calls as explained above.
+- Open another terminal in the same directory.
+- Use the below curl command to get the token,
+    -**curl -X POST "http://localhost:8080/token" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"userName\": \"Lokesh\", \"userId\": 1234, \"role\": \"admin\"}"**
+- Use the below curl command to get the list of transactions,
+    -**curl -X GET "http://localhost:8080/obp/v1.2.1/banks/rbs/accounts/savings-kids-john/public/transactions" -H "Authorisation: Token eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMb2tlc2giLCJ1c2VySWQiOiIxMjM0Iiwicm9sZSI6ImFkbWluIn0.g17gIYpcvJzKHDATOvEEuPAT7oeO7XWRp-NsMxH0tk87R9aHAqKpVyuGyqpteTQDC2vpbsEsnWMDaeKq2q2How"**
+- Use the below curl command to get the filtered list of transactions based on transaction type,
+    -**curl -X GET "http://localhost:8080/obp/v1.2.1/banks/rbs/accounts/savings-kids-john/public/transactions/filter?transactionType=sandbox-payment" -H "Authorisation: Token eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMb2tlc2giLCJ1c2VySWQiOiIxMjM0Iiwicm9sZSI6ImFkbWluIn0.g17gIYpcvJzKHDATOvEEuPAT7oeO7XWRp-NsMxH0tk87R9aHAqKpVyuGyqpteTQDC2vpbsEsnWMDaeKq2q2How"**
+- Use the below curl command to get the total transaction amount based on transaction type,
+    -**curl -X GET "http://localhost:8080/obp/v1.2.1/banks/rbs/accounts/savings-kids-john/public/transactions/totalAmount?transactionType=sandbox-payment" -H "Authorisation: Token eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMb2tlc2giLCJ1c2VySWQiOiIxMjM0Iiwicm9sZSI6ImFkbWluIn0.g17gIYpcvJzKHDATOvEEuPAT7oeO7XWRp-NsMxH0tk87R9aHAqKpVyuGyqpteTQDC2vpbsEsnWMDaeKq2q2How"**
 - Use the below command to run to run the test cases,
    - a) **mvn clean install**
    - b) **mvn test**
