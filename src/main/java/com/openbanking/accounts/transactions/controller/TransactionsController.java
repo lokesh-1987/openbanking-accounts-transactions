@@ -25,7 +25,7 @@ public class TransactionsController {
     public TransactionsResponse getAccountsTransactions(@PathVariable("bankId") String bankId,
                                                         @PathVariable("accountId") String accountId,
                                                         @PathVariable("viewId") String viewId) throws OpenBankSandboxServiceException, IncorrectSandBoxInputDetailException {
-        log.info("Received getAccountsTransactions request with bank id {}, accountId {} and viewId {}", bankId, accountId, viewId);
+        log.info("Received getAccountsTransactions request with bank id - {}, accountId - {} and viewId - {}", bankId, accountId, viewId);
         return new TransactionTransformer().apply(transactionsService.getTransactions(bankId, accountId, viewId));
     }
 
@@ -35,7 +35,7 @@ public class TransactionsController {
                                                                    @PathVariable("viewId") String viewId,
                                                                    @RequestParam("transactionType") String transactionType)
             throws OpenBankSandboxServiceException,IncorrectSandBoxInputDetailException {
-        log.info("Received getAccountsTransactionsBasedOnType request with bank id {}, accountId {}, viewId {} and transactionType", bankId, accountId, viewId, transactionType);
+        log.info("Received getAccountsTransactionsBasedOnType request with bank id - {}, accountId - {} and viewId - {} and transactionType - {}", bankId, accountId, viewId, transactionType);
         final List<Transactions> transactions = new TransactionTransformer()
                 .apply(transactionsService.getTransactions(bankId, accountId, viewId)).getTransactions()
                 .stream()
@@ -50,7 +50,7 @@ public class TransactionsController {
                                                        @PathVariable("viewId") String viewId,
                                                        @RequestParam("transactionType") String transactionType)
             throws OpenBankSandboxServiceException, IncorrectSandBoxInputDetailException {
-        log.info("Received getTotalAmountBasedOnTransactionType request with bank id {}, accountId {}, viewId {} and transactionType", bankId, accountId, viewId, transactionType);
+        log.info("Received getTotalAmountBasedOnTransactionType request with bank id - {}, accountId - {} and viewId - {} and transactionType -{}", bankId, accountId, viewId, transactionType);
         return new TransactionTransformer()
                 .apply(transactionsService.getTransactions(bankId, accountId, viewId)).getTransactions()
                 .stream()

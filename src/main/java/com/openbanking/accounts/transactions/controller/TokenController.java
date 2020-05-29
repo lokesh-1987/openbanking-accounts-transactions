@@ -16,7 +16,7 @@ public class TokenController {
 
     @PostMapping
     public String generateToken(@RequestBody final JwtUser jwtUser) {
-        log.debug("JwtUser {} {} {}", jwtUser.getUserName(), jwtUser.getUserId(), jwtUser.getRole());
+        log.debug("JwtUser details : {}, {}, {}", jwtUser.getUserName(), jwtUser.getUserId(), jwtUser.getRole());
         return jwtGenerator.generate(jwtUser);
     }
 }
